@@ -12,6 +12,9 @@ export const UserFactory = Factory.define(User, ({ faker }) => {
   .state("admin", (user) => {
     user.roleId = Role.ADMIN;
   })
+  .state("user", (user) => {
+    user.roleId = Role.USER;
+  })
   .state("login", (user) => {
     user.password = "secretpassword";
   })

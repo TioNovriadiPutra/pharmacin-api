@@ -15,3 +15,12 @@ export interface LoginInput {
   email?: string;
   password?: string;
 }
+
+export interface EmployeeInput {
+  email?: string;
+  password?: string;
+  password_confirmation?: string;
+  fullName?: string;
+  gender?: Gender;
+  phone?: string;
+}

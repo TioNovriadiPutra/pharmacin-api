@@ -27,4 +27,7 @@ Route.get("/", async () => {
 Route.group(() => {
   Route.post("/register", "AuthController.register").as("auth.register");
   Route.post("/login", "AuthController.login").as("auth.login");
+  Route.post("/register/employee/:id", "AuthController.registerEmployee")
+    .as("auth.register.employee")
+    .middleware(["auth"]);
 }).prefix("auth");
