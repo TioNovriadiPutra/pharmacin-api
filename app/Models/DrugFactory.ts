@@ -1,24 +1,24 @@
 import { DateTime } from "luxon";
 import {
   BaseModel,
-  HasMany,
   ManyToMany,
   column,
-  hasMany,
   manyToMany,
 } from "@ioc:Adonis/Lucid/Orm";
-import User from "./User";
-import DrugFactory from "./DrugFactory";
+import Clinic from "./Clinic";
 
-export default class Clinic extends BaseModel {
+export default class DrugFactory extends BaseModel {
   @column({ isPrimary: true })
   public id: number;
 
   @column()
-  public clinicName: string;
+  public factoryName: string;
 
   @column()
-  public clinicPhone?: string;
+  public factoryEmail?: string;
+
+  @column()
+  public factoryPhone?: string;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
@@ -26,11 +26,8 @@ export default class Clinic extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime;
 
-  @hasMany(() => User)
-  public employees: HasMany<typeof User>;
-
-  @manyToMany(() => DrugFactory, {
+  @manyToMany(() => Clinic, {
     pivotTable: "drug_factory_partners",
   })
-  public drugFactories: ManyToMany<typeof DrugFactory>;
+  public clinics: ManyToMany<typeof Clinic>;
 }

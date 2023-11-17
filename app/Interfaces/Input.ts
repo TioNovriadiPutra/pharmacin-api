@@ -24,3 +24,9 @@ export interface EmployeeInput {
   gender?: Gender;
   phone?: string;
 }
+
+export interface FactoryInput {
+  factoryName?: string;
+  factoryEmail?: string;
+  factoryPhone?: string;
+}

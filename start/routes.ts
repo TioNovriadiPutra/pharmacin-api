@@ -31,3 +31,11 @@ Route.group(() => {
     .as("auth.register.employee")
     .middleware(["auth"]);
 }).prefix("auth");
+
+Route.group(() => {
+  Route.post("/add-factory/:id", "DrugFactoriesController.addDrugFactory").as(
+    "factory.add-factory"
+  );
+})
+  .prefix("factory")
+  .middleware("auth");
