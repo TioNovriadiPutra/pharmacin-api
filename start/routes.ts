@@ -33,7 +33,7 @@ Route.group(() => {
 }).prefix("auth");
 
 Route.group(() => {
-  Route.post("/add-factory/:id", "DrugFactoriesController.addDrugFactory").as(
+  Route.post("/", "DrugFactoriesController.addDrugFactory").as(
     "factory.add-factory"
   );
 })

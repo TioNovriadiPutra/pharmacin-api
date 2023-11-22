@@ -13,9 +13,7 @@ test.group("Factory add drug factory", (group) => {
   test("should response status code 401 when token not provided", async ({
     client,
   }) => {
-    const newClinic = await ClinicFactory.create();
-
-    const response = await client.post(`/factory/add-factory/${newClinic.id}`);
+    const response = await client.post(`/factory`);
 
     response.assertStatus(401);
   });
@@ -23,9 +21,7 @@ test.group("Factory add drug factory", (group) => {
   test("should response with error message when token not provided", async ({
     client,
   }) => {
-    const newClinic = await ClinicFactory.create();
-
-    const response = await client.post(`/factory/add-factory/${newClinic.id}`);
+    const response = await client.post(`/factory`);
 
     response.assertBodyContains({
       errors: [{ message: "E_UNAUTHORIZED_ACCESS: Unauthorized access" }],
@@ -38,7 +34,7 @@ test.group("Factory add drug factory", (group) => {
     const newClinic = await ClinicFactory.with("employees").create();
 
     const response = await client
-      .post(`/factory/add-factory/${newClinic.id}`)
+      .post(`/factory`)
       .loginAs(newClinic.employees[0]);
 
     response.assertStatus(422);
@@ -50,7 +46,7 @@ test.group("Factory add drug factory", (group) => {
     const newClinic = await ClinicFactory.with("employees").create();
 
     const response = await client
-      .post(`/factory/add-factory/${newClinic.id}`)
+      .post(`/factory`)
       .loginAs(newClinic.employees[0]);
 
     response.assertBodyContains([
@@ -72,7 +68,7 @@ test.group("Factory add drug factory", (group) => {
     };
 
     const response = await client
-      .post(`/factory/add-factory/${newClinic.id}`)
+      .post(`/factory`)
       .loginAs(newClinic.employees[0])
       .form(factoryInput);
 
@@ -89,7 +85,7 @@ test.group("Factory add drug factory", (group) => {
     };
 
     const response = await client
-      .post(`/factory/add-factory/${newClinic.id}`)
+      .post(`/factory`)
       .loginAs(newClinic.employees[0])
       .form(factoryInput);
 

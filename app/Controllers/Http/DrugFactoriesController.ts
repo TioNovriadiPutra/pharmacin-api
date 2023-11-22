@@ -6,7 +6,7 @@ export default class DrugFactoriesController {
   public async addDrugFactory({
     request,
     response,
-    params,
+    auth,
   }: HttpContextContract) {
     try {
       const data = await request.validate(AddDrugFactoryValidator);
@@ -18,7 +18,8 @@ export default class DrugFactoriesController {
 
       await newDrugFactory.save();
 
-      await newDrugFactory.related("clinics").sync([params.id]);
+      if (auth.user)
+        await newDrugFactory.related("clinics").sync([auth.user.clinicId]);
 
       return response.created({ message: "Drug factory added!" });
     } catch (error) {
@@ -27,4 +28,6 @@ export default class DrugFactoriesController {
       }
     }
   }
+
+  public async showAllDrugFactories({ response, auth }: HttpContextContract) {}
 }
