@@ -71,6 +71,11 @@ Pharmacin API is and API that develop using NodeJS with AdonisJS as the framewor
    ```bash
    node ace serve --watch
 
+## License
+This project license under the MIT License. See 
+`LICENSE`
+for more information.
+
 ## Contact
 Tio Novriadi Putra - [tio_novriadi](https://instagram.com/tio_novriadi) - [tionvriadi@gmail.com](mailto:tionvriadi@gmail.com)  
 Project link : [Pharmacin API](https://github.com/TioNovriadiPutra/pharmacin-api)
