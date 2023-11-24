@@ -16,11 +16,11 @@ Pharmacin API is the back-end of the application Pharmacin, user for all the bus
 4. Contact
 
 ## Getting Started
-Pharmacin API is and API that develop using NodeJS with AdonisJS as the framework. AdonisJS in a NodeJS framework that's use Typescript as its languange. The API is also connected to a MySQL database using XAMPP. Before you can run the application, you need to install a couple of softwares so that the application can run perfectly.
+Pharmacin API is an API that develop using NodeJS with AdonisJS as the framework. AdonisJS is a NodeJS framework that's use Typescript as its languange. The API is also connected to a MySQL database using XAMPP. Before you can run the application, you need to install a couple of softwares so that the application can run perfectly.
 
 ### Prerequisites
 - Node >= 16.14.0
-- XAMPP (for windows)
+- XAMPP (for Windows)
 - MAMP (for MacOS)
 
 ### Installation
