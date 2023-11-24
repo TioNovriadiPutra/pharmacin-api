@@ -29,5 +29,23 @@ export default class DrugFactoriesController {
     }
   }
 
-  public async showAllDrugFactories({ response, auth }: HttpContextContract) {}
+  public async showClinicDrugFactories({
+    response,
+    auth,
+  }: HttpContextContract) {
+    if (auth.user) {
+      const clinicId = auth.user.clinicId;
+
+      const factoriesData = await DrugFactory.query()
+        .whereHas("clinics", (builder) => {
+          builder.where("clinic_id", clinicId);
+        })
+        .orderBy("factory_name", "asc");
+
+      return response.ok({
+        message: "Data fetched!",
+        data: factoriesData,
+      });
+    }
+  }
 }

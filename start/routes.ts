@@ -33,6 +33,9 @@ Route.group(() => {
 }).prefix("auth");
 
 Route.group(() => {
+  Route.get("/", "DrugFactoriesController.showClinicDrugFactories").as(
+    "factory.show"
+  );
   Route.post("/", "DrugFactoriesController.addDrugFactory").as(
     "factory.add-factory"
   );
