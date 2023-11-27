@@ -12,6 +12,7 @@ export default class extends BaseSchema {
       */
 
       table.integer('drug_id').unsigned().references('drugs.id').onDelete('CASCADE').notNullable()
+      table.integer('drug_drugcategory_id').unsigned().references('drugs.drug_category_id').onDelete('CASCADE').notNullable()
       table.integer('total_stock').notNullable(),
       table.timestamp('created_at', { useTz: true }).notNullable().defaultTo(this.now())
       table.timestamp('updated_at', { useTz: true }).notNullable().defaultTo(this.now())
