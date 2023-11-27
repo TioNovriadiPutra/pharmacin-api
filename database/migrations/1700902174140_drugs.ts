@@ -17,10 +17,10 @@ export default class extends BaseSchema {
       table.string('generic_name', 100)
       table.string('dose', 50)
       table.integer('shelve')
-      table.integer('selling_price').notNullable().notNullable().defaultTo(this.now());
-      table.integer('purchase_price').notNullable().notNullable().defaultTo(this.now());
-      table.timestamp('created_at', { useTz: true })
-      table.timestamp('updated_at', { useTz: true })
+      table.integer('selling_price')
+      table.integer('purchase_price')
+      table.timestamp('created_at', { useTz: true }).notNullable().notNullable().defaultTo(this.now());
+      table.timestamp('updated_at', { useTz: true }).notNullable().notNullable().defaultTo(this.now());
     })
   }
 

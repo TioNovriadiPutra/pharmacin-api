@@ -15,8 +15,8 @@ export default class extends BaseSchema {
       table.integer('purchase_transaction_id').unsigned().references('purchase_transactions.id').onDelete('CASCADE').notNullable()
       table.date('expired').notNullable()
       table.integer('quantity').notNullable()
-      table.timestamp('created_at', { useTz: true })
-      table.timestamp('updated_at', { useTz: true })
+      table.timestamp('created_at', { useTz: true }).notNullable().notNullable().defaultTo(this.now());
+      table.timestamp('updated_at', { useTz: true }).notNullable().notNullable().defaultTo(this.now());
     })
   }
 
