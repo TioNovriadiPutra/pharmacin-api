@@ -9,6 +9,7 @@ import {
 } from "@ioc:Adonis/Lucid/Orm";
 import User from "./User";
 import DrugFactory from "./DrugFactory";
+import DrugCategory from "./DrugCategory";
 
 export default class Clinic extends BaseModel {
   @column({ isPrimary: true })
@@ -28,6 +29,9 @@ export default class Clinic extends BaseModel {
 
   @hasMany(() => User)
   public employees: HasMany<typeof User>;
+
+  @hasMany(() => DrugCategory)
+  public drug_category_id: HasMany<typeof DrugCategory>;
 
   @manyToMany(() => DrugFactory, {
     pivotTable: "drug_factory_partners",
