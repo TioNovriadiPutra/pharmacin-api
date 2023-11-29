@@ -11,7 +11,7 @@ export default class Drug extends BaseModel {
   public name: string;
 
   @column()
-  public generic_name: string;
+  public genericName: string;
   
   @column()
   public dose: string;
@@ -20,10 +20,20 @@ export default class Drug extends BaseModel {
   public shelve: number;
   
   @column()
-  public selling_price: number;
+  public sellingPrice: number;
   
   @column()
-  public purchase_price: number;
+  public purchasePrice: number;
+
+  @column()
+  public factoryId: number
+  @belongsTo(() => DrugFactory)
+  public factory: BelongsTo<typeof DrugFactory>
+
+  @column()
+  public drugCategoryId: number
+  @belongsTo(() => DrugCategory)
+  public drugCategory: BelongsTo<typeof DrugCategory>
   
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -31,9 +41,5 @@ export default class Drug extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @belongsTo(() => DrugFactory)
-  public factory_id: BelongsTo<typeof DrugFactory>
 
-  @belongsTo(() => DrugCategory)
-  public drug_category_id: BelongsTo<typeof DrugCategory>
 }

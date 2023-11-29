@@ -8,10 +8,19 @@ export default class StockOpname extends BaseModel {
   public id: number
 
   @column()
-  public adjustment_price: number
+  public adjustmentPrice: number
 
   @column()
-  public stock_difference: number
+  public stockDifference: number
+
+  @column()
+  public stockPerBatchId: number
+
+  @column()
+  public drugId: number
+
+  @column()
+  public drugDrugCategoryId: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -24,5 +33,7 @@ export default class StockOpname extends BaseModel {
 
   @belongsTo(() => Drug)
   public drug_id: BelongsTo<typeof Drug>
+
+  @belongsTo(() => Drug)
   public drug_drugcategory_id: BelongsTo<typeof Drug>
 }

@@ -12,7 +12,7 @@ export default class StockPerBatch extends BaseModel {
   public stock: number
 
   @column()
-  public stock_active: number
+  public stockActive: number
 
   @column()
   public expired: Date
@@ -25,6 +25,8 @@ export default class StockPerBatch extends BaseModel {
 
   @belongsTo(() => Drug)
   public drug_id: BelongsTo<typeof Drug>
+
+  @belongsTo(() => Drug)
   public drug_drugcategory_id: BelongsTo<typeof Drug>
   
   @belongsTo(() => Stock)
