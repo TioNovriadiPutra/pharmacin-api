@@ -30,3 +30,9 @@ export interface FactoryInput {
   factoryEmail?: string;
   factoryPhone?: string;
 }
+
+export interface DrugInput {
+  name?: string;
+  sellingPrice?: number;
+  purchasePrice?: number;
+}

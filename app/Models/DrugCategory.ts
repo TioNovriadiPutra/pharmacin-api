@@ -8,7 +8,7 @@ export default class DrugCategory extends BaseModel {
   public id: number
 
   @column()
-  public category_name: string
+  public categoryName: string
 
   @column()
   public clinicId: number

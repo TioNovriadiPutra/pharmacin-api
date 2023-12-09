@@ -11,13 +11,13 @@ export default class Drug extends BaseModel {
   public name: string;
 
   @column()
-  public genericName: string;
+  public genericName?: string;
   
   @column()
-  public dose: string;
+  public dose?: string;
 
   @column()
-  public shelve: number;
+  public shelve?: number;
   
   @column()
   public sellingPrice: number;
@@ -26,7 +26,7 @@ export default class Drug extends BaseModel {
   public purchasePrice: number;
 
   @column()
-  public factoryId: number
+  public fnhactoryId: number
   @belongsTo(() => DrugFactory)
   public factory: BelongsTo<typeof DrugFactory>
 
