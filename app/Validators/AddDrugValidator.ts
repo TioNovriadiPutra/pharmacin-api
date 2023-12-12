@@ -31,7 +31,7 @@ export default class AddDrugValidator {
       sellingPrice: schema.number(),
       purchasePrice: schema.number(),
       drugCategoryId: schema.number(),
-      factoryId: schema.number()
+      drugFactoryId: schema.number()
     })
 
   /**

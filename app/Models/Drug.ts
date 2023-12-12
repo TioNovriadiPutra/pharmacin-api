@@ -26,9 +26,9 @@ export default class Drug extends BaseModel {
   public purchasePrice: number;
 
   @column()
-  public fnhactoryId: number
+  public drugFactoryId: number
   @belongsTo(() => DrugFactory)
-  public factory: BelongsTo<typeof DrugFactory>
+  public drugFactory: BelongsTo<typeof DrugFactory>
 
   @column()
   public drugCategoryId: number

@@ -11,7 +11,7 @@ export default class extends BaseSchema {
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
       // - FK factory
-      table.integer('factory_id').unsigned().references('drug_factories.id').onDelete('CASCADE').notNullable()
+      table.integer('drug_factory_id').unsigned().references('drug_factories.id').onDelete('CASCADE').notNullable()
       table.integer('drug_category_id').unsigned().references('drug_categories.id').onDelete('CASCADE').notNullable()
       table.string('name', 100).notNullable()
       table.string('generic_name', 100)

@@ -14,6 +14,7 @@ export default class DrugFactoryController {
         try{ 
             if(auth.user){
                 const data = await request.validate(AddDrugValidator);
+                console.log(data)
                 const clinicData = await Database.rawQuery(
                     'SELECT cl.*, dc.category_name, dc.id AS kamrol, dfp.* FROM clinics cl LEFT JOIN drug_categories dc ON dc.clinic_id = cl.id LEFT JOIN drug_factory_partners dfp ON cl.id = dfp.clinic_id WHERE cl.id = ?',
                     [auth.user.clinicId]
@@ -29,7 +30,7 @@ export default class DrugFactoryController {
                 newDrug.purchasePrice = data.purchasePrice;
                 
                 newDrug.drugCategoryId = data.drugCategoryId
-                newDrug.factoryId = data.factoryId
+                newDrug.drugFactoryId = data.drugFactoryId
                 await newDrug.save()
                 // return response.json({data: clinicData})
                 return response.created({message: "Drug added successfully", data: data})
@@ -40,18 +41,19 @@ export default class DrugFactoryController {
         }
     }
    
-    public async showClinicDrugs({
-        response, auth
-    }: HttpContextContract) {
-        if(auth.user){
-            const clinicId = auth.user.clinicId
-
-            const drugsData = await Drug.query().preload("factory").where('clinic_id', clinicId)
-
-            return response.ok({
-                message: "Data fetched!",
-                data: drugsData
-            })
+    public async showDrugs({
+        response,
+        auth,
+      }: HttpContextContract) {
+        if (auth.user) {
+            const drugsData = await Database.rawQuery(
+            'SELECT * FROM drugs'
+          )
+    
+          return response.ok({
+            message: "Data fetched!",
+            data: drugsData,
+          });
         }
-    }
+      }
 }

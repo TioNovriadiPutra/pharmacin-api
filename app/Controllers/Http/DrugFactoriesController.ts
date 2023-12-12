@@ -1,4 +1,5 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
+import Database from "@ioc:Adonis/Lucid/Database";
 import DrugFactory from "App/Models/DrugFactory";
 import AddDrugFactoryValidator from "App/Validators/AddDrugFactoryValidator";
 
@@ -36,15 +37,21 @@ export default class DrugFactoriesController {
     if (auth.user) {
       const clinicId = auth.user.clinicId;
 
-      const factoriesData = await DrugFactory.query()
-        .whereHas("clinics", (builder) => {
-          builder.where("clinic_id", clinicId);
-        }).preload('drugs')
-        .orderBy("factory_name", "asc");
+      const factoryData = await Database.rawQuery(
+        'SELECT df.* FROM drug_factories df LEFT JOIN drug_factory_partners dfp ON dfp.drug_factory_id = df.id LEFT JOIN clinics cl ON cl.id = dfp.clinic_id WHERE cl.id = ?',
+        [auth.user.clinicId]
+        )
+      // console.log(factoryData)
+
+      // const factoriesData = await DrugFactory.query()
+      //   .whereHas("clinics", (builder) => {
+      //     builder.where("clinic_id", clinicId);
+      //   }).preload('drugs')
+      //   .orderBy("factory_name", "asc");
 
       return response.ok({
         message: "Data fetched!",
-        data: factoriesData,
+        data: factoryData,
       });
     }
   }
@@ -54,12 +61,16 @@ export default class DrugFactoriesController {
       const factoryId  = params.id;
       console.log(factoryId)
 
-      const factoryDetails = await DrugFactory.query()
-        .where('id', factoryId).preload('drugs') //preload drugs
+      const factoryDetails = await Database.rawQuery(
+        'SELECT * FROM drug_factories WHERE id = ?',
+        [factoryId]
+      )
+      // const factoryDetails = await DrugFactory.query()
+      //   .where('id', factoryId).preload('drugs') //preload drugs
         
-      if (!factoryDetails.length ) {
-        return response.status(404).json({ message: 'Factory not found' });
-      }
+      // if (!factoryDetails.length ) {
+      //   return response.status(404).json({ message: 'Factory not found' });
+      // }
 
       return response.ok({
         message: 'Factory details fetched!',
