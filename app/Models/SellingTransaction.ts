@@ -1,26 +1,33 @@
 import { DateTime } from 'luxon'
 import { BaseModel, BelongsTo, HasMany, belongsTo, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import { belongsTo } from '@ioc:Adonis/Lucid/Orm'
 import Clinic from './Clinic'
-import Drug from './Drug'
 
-export default class DrugCategory extends BaseModel {
+export default class SellingTransaction extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
   @column()
-  public categoryName: string
+  public customerName: string
+
+  @column()
+  public totalPrice: number
+  
+  @column()
+  public paymentNominal: number
+
+  @column()
+  public changeNominal: number
 
   @column()
   public clinicId: number
-  @belongsTo(() => Clinic)
-  public clinic: BelongsTo<typeof Clinic>;
+
+  @belongsTo(()=> Clinic)
+  public clinic: BelongsTo<typeof Clinic>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
-
-  @hasMany(() => Drug)
-  public drugs: HasMany<typeof Drug>
 }

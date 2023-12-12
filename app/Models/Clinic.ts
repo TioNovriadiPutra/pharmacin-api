@@ -31,7 +31,7 @@ export default class Clinic extends BaseModel {
   public employees: HasMany<typeof User>;
 
   @hasMany(() => DrugCategory)
-  public drug_category_id: HasMany<typeof DrugCategory>;
+  public categories: HasMany<typeof DrugCategory>;
 
   @manyToMany(() => DrugFactory, {
     pivotTable: "drug_factory_partners",
