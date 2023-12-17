@@ -29,11 +29,11 @@ export default class StockOpname extends BaseModel {
   public updatedAt: DateTime
 
   @belongsTo(()=>StockPerBatch)
-  public stock_per_batch_id: BelongsTo<typeof StockPerBatch>
+  public stockPerBatch: BelongsTo<typeof StockPerBatch>
 
   @belongsTo(() => Drug)
-  public drug_id: BelongsTo<typeof Drug>
+  public drug: BelongsTo<typeof Drug>
 
   @belongsTo(() => Drug)
-  public drug_drugcategory_id: BelongsTo<typeof Drug>
+  public drugCategory: BelongsTo<typeof Drug>
 }
