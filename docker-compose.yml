@@ -14,19 +14,19 @@ services:
     ports:
       - ${PORT}:${PORT}
     environment:
-      - PORT=3333
+      - PORT=[port]
       - HOST=0.0.0.0
-      - NODE_ENV=development
+      - NODE_ENV=[development/production]
       - APP_KEY=3sHBE1aL9HdpxfGdDO7K5X9sIoKNR5Zx
       - DRIVE_DISK=local
       - DB_CONNECTION=mysql
-      - MYSQL_HOST=172.27.0.4
-      - MYSQL_PORT=3306
-      - MYSQL_DB_NAME=pharmacin_db
-      - MYSQL_USER=pharmacin_api
-      - MYSQL_PASSWORD=Pharmacin132
+      - MYSQL_HOST=[host_db]
+      - MYSQL_PORT=[port_db]
+      - MYSQL_DB_NAME=[name_db]
+      - MYSQL_USER=[user_db]
+      - MYSQL_PASSWORD=[pass_db]
     volumes:
-      - /home/project/data-docker:/usr/src/app
+      - [path docker cth:/home/project/data-docker]:/usr/src/app
     command: dumb-init node ace serve --watch --node-args="--inspect=0.0.0.0"
     networks:
       - pharmacin_docker_network
