@@ -1,11 +1,14 @@
 import { DateTime } from "luxon";
 import {
   BaseModel,
+  HasMany,
   ManyToMany,
   column,
+  hasMany,
   manyToMany,
 } from "@ioc:Adonis/Lucid/Orm";
 import Clinic from "./Clinic";
+import Drug from "./Drug";
 
 export default class DrugFactory extends BaseModel {
   @column({ isPrimary: true })
@@ -30,4 +33,7 @@ export default class DrugFactory extends BaseModel {
     pivotTable: "drug_factory_partners",
   })
   public clinics: ManyToMany<typeof Clinic>;
+
+  @hasMany(()=> Drug)
+  public drugs: HasMany<typeof Drug>
 }

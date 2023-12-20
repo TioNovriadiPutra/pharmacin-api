@@ -1,7 +1,7 @@
-import { schema, CustomMessages } from "@ioc:Adonis/Core/Validator";
-import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
+import { schema, CustomMessages } from '@ioc:Adonis/Core/Validator'
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-export default class LoginValidator {
+export default class AddDrugCategoryValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   /*
@@ -24,9 +24,8 @@ export default class LoginValidator {
    *    ```
    */
   public schema = schema.create({
-    email: schema.string(),
-    password: schema.string(),
-  });
+    categoryName: schema.string(),
+  })
 
   /**
    * Custom messages for validation failures. You can make use of dot notation `(.)`
@@ -40,6 +39,6 @@ export default class LoginValidator {
    *
    */
   public messages: CustomMessages = {
-    required: "Email dan Password harus diisi!",
-  };
+    'categoryName.required': 'The drug category name field cannot be empty',
+  }
 }

@@ -39,14 +39,17 @@ export default class RegisterValidator {
         allow: ["space"],
       }),
     ]),
-    gender: schema.enum(["male", "female"] as const),
+    gender: schema.object().members({
+      label: schema.string(),
+      value: schema.enum(["male", "female"] as const),
+    }),
     phone: schema.string([
       rules.mobile({
         locale: ["id-ID"],
       }),
     ]),
     clinicName: schema.string(),
-    clinicPhone: schema.string.optional([
+    clinicPhone: schema.string([
       rules.mobile({
         locale: ["id-ID"],
       }),
@@ -65,18 +68,19 @@ export default class RegisterValidator {
    *
    */
   public messages: CustomMessages = {
-    "email.required": "Email must be filled!",
-    "email.email": "Email format incorrect!",
-    "email.unique": "Email already registered!",
-    "password.required": "Password must be filled!",
-    "password.minLength": "Password at least 8 characters!",
-    "password_confirmation.confirmed": "Password confirmation failed!",
-    "fullName.required": "Full name must be filled!",
-    "fullName.alpha": "Full name must contain alphabet only!",
-    "gender.required": "Gender must be filled!",
-    "phone.required": "Phone number must be filled!",
-    "phone.mobile": "Phone number format incorrect!",
-    "clinicName.requied": "Clinic name must be filled!",
-    "clinicPhone.mobile": "Clinic phone number format incorrect!",
+    "email.required": "Email harus diisi!",
+    "email.email": "Format Email salah!",
+    "email.unique": "Email sudah terdaftar!",
+    "password.required": "Password harus diisi!",
+    "password.minLength": "Password minimal 8 karakter!",
+    "password_confirmation.confirmed": "Konfirmasi Password gagal!",
+    "fullName.required": "Nama Lengkap harus diisi!",
+    "fullName.alpha": "Nama Lengkap harus terdiri dari alfabet saja!",
+    "gender.required": "Jenis Kelamin harus diisi!",
+    "phone.required": "Nomor Handphone harus diisi!",
+    "phone.mobile": "Nomor Handphone bukan nomor Indonesia!",
+    "clinicName.required": "Nama Klinik harus diisi!",
+    "clinicPhone.required": "Nomor Telepon Klinik harus diisi!",
+    "clinicPhone.mobile": "Nomor Telepon Klinik salah!",
   };
 }
