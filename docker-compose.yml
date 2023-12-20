@@ -1,0 +1,32 @@
+version: '3.2'
+
+networks:
+  pharmacin_docker_network: 
+    external: true
+
+services:
+  pharmacin_api:
+    restart: always
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: dependencies
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      - PORT=3333
+      - HOST=0.0.0.0
+      - NODE_ENV=development
+      - APP_KEY=3sHBE1aL9HdpxfGdDO7K5X9sIoKNR5Zx
+      - DRIVE_DISK=local
+      - DB_CONNECTION=mysql
+      - MYSQL_HOST=172.27.0.4
+      - MYSQL_PORT=3306
+      - MYSQL_DB_NAME=pharmacin_db
+      - MYSQL_USER=pharmacin_api
+      - MYSQL_PASSWORD=Pharmacin132
+    volumes:
+      - /home/project/data-docker:/usr/src/app
+    command: dumb-init node ace serve --watch --node-args="--inspect=0.0.0.0"
+    networks:
+      - pharmacin_docker_network
