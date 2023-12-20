@@ -33,27 +33,31 @@ Route.group(() => {
 }).prefix("auth");
 
 Route.group(() => {
+  Route.get("/:id", "UsersController.getUserProfile").as("user.profile");
+})
+  .prefix("user")
+  .middleware("auth");
+
+Route.group(() => {
   Route.get("/", "DrugFactoriesController.showClinicDrugFactories").as(
     "factory.show"
   );
   Route.post("/", "DrugFactoriesController.addDrugFactory").as(
     "factory.add-factory"
   );
-  Route.get('/:id', "DrugFactoriesController.showFactoryDetails").as(
+  Route.get("/:id", "DrugFactoriesController.showFactoryDetails").as(
     "factory.details"
-  )
+  );
 })
   .prefix("factory")
   .middleware("auth");
 
 Route.group(() => {
-  Route.get("/", "DrugsController.showDrugs").as(
-    "drugs.show"
-  );
-  Route.post("/", "DrugsController.addDrug").as(
-    "drugs.add-drug"
-  )
-}).prefix("drug").middleware("auth")
+  Route.get("/", "DrugsController.showDrugs").as("drugs.show");
+  Route.post("/", "DrugsController.addDrug").as("drugs.add-drug");
+})
+  .prefix("drug")
+  .middleware("auth");
 
 Route.group(() => {
   Route.get("/", "DrugCategoriesController.showClinicDrugCategories").as(
@@ -61,5 +65,7 @@ Route.group(() => {
   );
   Route.post("/", "DrugCategoriesController.addDrugCategory").as(
     "category.add-drug-category"
-  )
-}).prefix("category").middleware("auth")
+  );
+})
+  .prefix("category")
+  .middleware("auth");

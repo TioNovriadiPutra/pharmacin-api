@@ -40,6 +40,6 @@ export default class LoginValidator {
    *
    */
   public messages: CustomMessages = {
-    required: "Email and Password must be filled!",
+    required: "Email dan Password harus diisi!",
   };
 }

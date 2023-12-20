@@ -8,6 +8,8 @@ import User from "App/Models/User";
 import LoginValidator from "App/Validators/LoginValidator";
 import RegisterEmployeeValidator from "App/Validators/RegisterEmployeeValidator";
 import RegisterValidator from "App/Validators/RegisterValidator";
+import CustomValidationException from "App/Exceptions/CustomValidationException";
+import CustomInvalidCredentialException from "App/Exceptions/CustomInvalidCredentialException";
 
 export default class AuthController {
   public async register({ request, response }: HttpContextContract) {
@@ -25,7 +27,7 @@ export default class AuthController {
 
       const newProfile = new Profile();
       newProfile.fullName = data.fullName;
-      newProfile.gender = data.gender as Gender;
+      newProfile.gender = data.gender.value as Gender;
       newProfile.phone = data.phone;
 
       await newClinic.related("employees").save(newUser);
@@ -36,7 +38,9 @@ export default class AuthController {
         message: "Registration success!",
       });
     } catch (error) {
-      return response.badRequest(error.messages.errors);
+      if (error.status === 422) {
+        throw new CustomValidationException(false, error.messages);
+      }
     }
   }
 
@@ -68,7 +72,7 @@ export default class AuthController {
       return response.created({ message: "Employee added!" });
     } catch (error) {
       if (error.status === 422) {
-        return response.unprocessableEntity(error.messages.errors);
+        throw new CustomValidationException(error.messages.errors);
       } else if (error.status === 403) {
         return response.forbidden({ message: error.message });
       }
@@ -85,17 +89,15 @@ export default class AuthController {
         message: "Login success!",
         token: token.token,
         userId: token.user.id,
-        roleId: token.user.roleId,
+        clinicId: token.user.id,
       });
     } catch (error) {
-      if (error.responseText) {
-        return response.unauthorized({
-          message: "Email or Password incorrect!",
-        });
-      } else {
-        return response.badRequest({
-          message: error.messages.errors[0].message,
-        });
+      if (error.status === 422) {
+        throw new CustomValidationException(false, error.messages);
+      } else if (error.status === 400) {
+        throw new CustomInvalidCredentialException(
+          "Email atau Password salah!"
+        );
       }
     }
   }
