@@ -9,6 +9,7 @@ import {
 } from "@ioc:Adonis/Lucid/Orm";
 import Clinic from "./Clinic";
 import Drug from "./Drug";
+import PurchaseTransaction from "./PurchaseTransaction";
 
 export default class DrugFactory extends BaseModel {
   @column({ isPrimary: true })
@@ -34,6 +35,9 @@ export default class DrugFactory extends BaseModel {
   })
   public clinics: ManyToMany<typeof Clinic>;
 
-  @hasMany(()=> Drug)
-  public drugs: HasMany<typeof Drug>
+  @hasMany(() => Drug)
+  public drugs: HasMany<typeof Drug>;
+
+  @hasMany(() => PurchaseTransaction)
+  public purchaseTransactions: HasMany<typeof PurchaseTransaction>;
 }

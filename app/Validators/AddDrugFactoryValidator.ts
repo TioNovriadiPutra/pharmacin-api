@@ -25,12 +25,12 @@ export default class AddDrugFactoryValidator {
    */
   public schema = schema.create({
     factoryName: schema.string(),
-    factoryEmail: schema.string.optional([
+    factoryEmail: schema.string([
       rules.email({
         ignoreMaxLength: true,
       }),
     ]),
-    factoryPhone: schema.string.optional([
+    factoryPhone: schema.string([
       rules.mobile({
         locale: ["id-ID"],
       }),
@@ -49,8 +49,10 @@ export default class AddDrugFactoryValidator {
    *
    */
   public messages: CustomMessages = {
-    "factoryName.required": "Factory name must be filled!",
-    "factoryEmail.email": "Factory email format incorrect!",
-    "factoryPhone.mobile": "Factory phone format incorrect!",
+    "factoryName.required": "Nama Pabrik harus diisi!!",
+    "factoryEmail.required": "Email Pabrik harus diisi!",
+    "factoryEmail.email": "Format Email Pabrik salah!",
+    "factoryPhone.required": "Nomor Telepon Pabrik harus diisi!",
+    "factoryPhone.mobile": "Nomor Telepon Pabrik salah!",
   };
 }
