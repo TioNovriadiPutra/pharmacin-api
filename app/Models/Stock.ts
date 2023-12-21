@@ -1,41 +1,48 @@
-import { DateTime } from 'luxon'
-import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
-import DrugFactory from './DrugFactory';
+import { DateTime } from "luxon";
+import {
+  BaseModel,
+  BelongsTo,
+  HasMany,
+  belongsTo,
+  column,
+  hasMany,
+} from "@ioc:Adonis/Lucid/Orm";
+import Drug from "./Drug";
+import DrugCategory from "./DrugCategory";
+import Clinic from "./Clinic";
+import StockPerBatch from "./StockPerBatch";
 
-export default class Drug extends BaseModel {
+export default class Stock extends BaseModel {
   @column({ isPrimary: true })
-  public id: number
+  public id: number;
 
   @column()
-  public name: string;
+  public totalStock: number;
 
   @column()
-  public generic_name: string;
-  
-  @column()
-  public dose: string;
+  public drugId: number;
 
   @column()
-  public shelve: number;
-  
+  public drugDrugcategoryId: number;
+
   @column()
-  public selling_price: number;
-  
-  @column()
-  public purchase_price: number;
-  
+  public clinicId: number;
+
   @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
+  public createdAt: DateTime;
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
-
-  @belongsTo(() => DrugFactory)
-  public factory_id: BelongsTo<typeof DrugFactory>
+  public updatedAt: DateTime;
 
   @belongsTo(() => Drug)
-  public drug_id: BelongsTo<typeof Drug>
-  
-  @belongsTo(() => Drug)
-  public drug_category_id: BelongsTo<typeof Drug>
+  public drug: BelongsTo<typeof Drug>;
+
+  @belongsTo(() => DrugCategory)
+  public drugCategory: BelongsTo<typeof DrugCategory>;
+
+  @belongsTo(() => Clinic)
+  public clinic: BelongsTo<typeof Clinic>;
+
+  @hasMany(() => StockPerBatch)
+  public stockBatches: HasMany<typeof StockPerBatch>;
 }

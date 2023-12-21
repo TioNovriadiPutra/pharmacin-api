@@ -1,40 +1,47 @@
-import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, HasMany, belongsTo, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
-import DrugFactory from './DrugFactory'
-import Clinic from './Clinic'
-import PurchaseShoppingCart from './PurchaseShoppingCart'
+import { DateTime } from "luxon";
+import {
+  BaseModel,
+  BelongsTo,
+  HasMany,
+  belongsTo,
+  column,
+  hasMany,
+} from "@ioc:Adonis/Lucid/Orm";
+import DrugFactory from "./DrugFactory";
+import Clinic from "./Clinic";
+import PurchaseShoppingCart from "./PurchaseShoppingCart";
 
 export default class PurchaseTransaction extends BaseModel {
   @column({ isPrimary: true })
-  public id: number
+  public id: number;
 
   @column()
-  public invoiceNumber: string
+  public invoiceNumber: string;
 
   @column.dateTime()
-  public purchaseDate: DateTime
+  public purchaseDate: DateTime;
 
   @column()
-  public totalPrice: number
-
-  @belongsTo(() => DrugFactory)
-  public drugFactory: BelongsTo<typeof DrugFactory>
+  public totalPrice: number;
 
   @column()
-  public drugFactoryId: number
-
-  @belongsTo(() => Clinic)
-  public clinic: BelongsTo<typeof Clinic>
+  public drugFactoryId: number;
 
   @column()
-  public clinicId: number
-
-  @hasMany(() => PurchaseShoppingCart)
-  public purchaseShoppingCarts: HasMany<typeof PurchaseShoppingCart>
+  public clinicId: number;
 
   @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
+  public createdAt: DateTime;
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
+  public updatedAt: DateTime;
+
+  @belongsTo(() => DrugFactory)
+  public drugFactory: BelongsTo<typeof DrugFactory>;
+
+  @hasMany(() => PurchaseShoppingCart)
+  public purchaseShoppingCarts: HasMany<typeof PurchaseShoppingCart>;
+
+  @belongsTo(() => Clinic)
+  public clinic: BelongsTo<typeof Clinic>;
 }

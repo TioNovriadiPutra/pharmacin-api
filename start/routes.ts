@@ -33,9 +33,15 @@ Route.group(() => {
 }).prefix("auth");
 
 Route.group(() => {
-  Route.get("/:id", "UsersController.getUserProfile").as("user.profile");
+  Route.get("/", "UsersController.getUserProfile").as("user.profile");
 })
   .prefix("user")
+  .middleware("auth");
+
+Route.group(() => {
+  Route.get("/report", "ClinicsController.getClinicReport").as("clinic.report");
+})
+  .prefix("clinic")
   .middleware("auth");
 
 Route.group(() => {
