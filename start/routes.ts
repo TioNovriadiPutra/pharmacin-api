@@ -60,7 +60,13 @@ Route.group(() => {
 
 Route.group(() => {
   Route.get("/", "DrugsController.showDrugs").as("drugs.show");
+  Route.get("/category", "DrugsController.showClinicDrugCategories").as(
+    "drug.show.category"
+  );
   Route.post("/", "DrugsController.addDrug").as("drugs.add-drug");
+  Route.post("/category", "DrugsController.storeDrugCategory").as(
+    "drug.store.category"
+  );
 })
   .prefix("drug")
   .middleware("auth");
