@@ -1,6 +1,7 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import Database from "@ioc:Adonis/Lucid/Database";
 import CustomValidationException from "App/Exceptions/CustomValidationException";
+import DataNotFoundException from "App/Exceptions/DataNotFoundException";
 import Clinic from "App/Models/Clinic";
 import DrugFactory from "App/Models/DrugFactory";
 import AddDrugFactoryValidator from "App/Validators/AddDrugFactoryValidator";
@@ -79,6 +80,26 @@ export default class DrugFactoriesController {
       return response
         .status(500)
         .json({ message: "Error fetching factory details" });
+    }
+  }
+
+  public async deleteClinicDrugFactory({
+    response,
+    params,
+    auth,
+  }: HttpContextContract) {
+    if (auth.user) {
+      try {
+        const factoryData = await DrugFactory.findOrFail(params.id);
+
+        await factoryData.related("clinics").detach([auth.user.clinicId]);
+
+        return response.ok({ message: "Pabrik berhasil dihapus!" });
+      } catch (error) {
+        if (error.status === 404) {
+          throw new DataNotFoundException("Data tidak ditemukan!", 404);
+        }
+      }
     }
   }
 }
