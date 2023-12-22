@@ -1,6 +1,7 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import Database from "@ioc:Adonis/Lucid/Database";
 import CustomValidationException from "App/Exceptions/CustomValidationException";
+import DataNotFoundException from "App/Exceptions/DataNotFoundException";
 import Clinic from "App/Models/Clinic";
 import DrugFactory from "App/Models/DrugFactory";
 import AddDrugFactoryValidator from "App/Validators/AddDrugFactoryValidator";
@@ -80,7 +81,6 @@ export default class DrugFactoriesController {
     }
   }
 
-
   public async updateFactoryDetails({request, response, params, auth}: HttpContextContract) {
     try{
       if(auth.user){
@@ -103,18 +103,25 @@ export default class DrugFactoriesController {
     }
   }
 
-  public async deleteFactory({response, params}: HttpContextContract) {
-    try {
-      const id = params.id
-      const dataFactory = await Database.rawQuery(
-        'SELECT * FROM drug_factories WHERE id = ?',
-        [id]
-      )
-      await dataFactory.delete()
-      return response.ok({message: "Factory has been deleted successfully"})
-    } catch (error) {
-      console.log(error)
-      return response.unprocessableEntity(error.messages.errors);
+
+  public async deleteClinicDrugFactory({
+    response,
+    params,
+    auth,
+  }: HttpContextContract) {
+    if (auth.user) {
+      try {
+        const factoryData = await DrugFactory.findOrFail(params.id);
+
+        await factoryData.related("clinics").detach([auth.user.clinicId]);
+
+        return response.ok({ message: "Pabrik berhasil dihapus!" });
+      } catch (error) {
+        if (error.status === 404) {
+          throw new DataNotFoundException("Data tidak ditemukan!", 404);
+        }
+      }
+
     }
   }
 }

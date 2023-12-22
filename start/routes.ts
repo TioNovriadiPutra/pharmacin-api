@@ -48,18 +48,24 @@ Route.group(() => {
   Route.get("/", "DrugFactoriesController.showClinicDrugFactories").as(
     "factory.show"
   );
+  Route.get("/:id", "DrugFactoriesController.showFactoryDetails").as(
+    "factory.details"
+  );
   Route.post("/", "DrugFactoriesController.addDrugFactory").as(
     "factory.add-factory"
   );
+
   Route.get("/:id", "DrugFactoriesController.showFactoryDetails").as(
     "factory.details"
   )
   Route.put('/:id', "DrugFactoriesController.updateFactoryDetails").as(
     "factory.update-factory"
   )
-  Route.delete(':id', "DrugFactoriesController.deleteFactory").as(
-    "factory.delete-factory"
-  )
+
+  Route.delete("/:id", "DrugFactoriesController.deleteClinicDrugFactory").as(
+    "factory.delete"
+  );
+
 })
   .prefix("factory")
   .middleware("auth");
