@@ -38,15 +38,13 @@ export default class DrugFactoriesController {
     auth,
   }: HttpContextContract) {
     if (auth.user) {
-      // const factoryData = await Database.rawQuery(
-      //   "SELECT df.* FROM drug_factories df LEFT JOIN drug_factory_partners dfp ON dfp.drug_factory_id = df.id LEFT JOIN clinics cl ON cl.id = dfp.clinic_id WHERE cl.id = ?",
-      //   [auth.user.clinicId]
-      // );
-      // console.log(factoryData)
+      const clinicId = auth.user.clinicId;
 
-      const factoryData = await Clinic.query()
-        .preload("drugFactories")
-        .where("id", auth.user.clinicId);
+      const factoryData = await Database.rawQuery(
+        'SELECT df.* FROM drug_factories df LEFT JOIN drug_factory_partners dfp ON dfp.drug_factory_id = df.id LEFT JOIN clinics cl ON cl.id = dfp.clinic_id WHERE cl.id = ?',
+        [clinicId]
+        )
+      // console.log(factoryData)
 
       return response.ok({
         message: "Data fetched!",
@@ -83,6 +81,29 @@ export default class DrugFactoriesController {
     }
   }
 
+  public async updateFactoryDetails({request, response, params, auth}: HttpContextContract) {
+    try{
+      if(auth.user){
+        const data = await request.validate(AddDrugFactoryValidator)
+        const id = params.id
+        const dataFactory = await Database.rawQuery(
+          'SELECT * FROM drug_factories WHERE id = ?',
+          [id]
+        )
+        dataFactory.factoryName = data.factoryName
+        dataFactory.factoryEmail = data.factoryEmail;
+        dataFactory.factoryPhone = data.factoryPhone;
+        
+        await dataFactory.save()
+        return response.ok({message: "Factory has been updated successfully"})
+      }
+    } catch (error) {
+      console.log(error)
+      return response.unprocessableEntity(error.messages.errors);
+    }
+  }
+
+
   public async deleteClinicDrugFactory({
     response,
     params,
@@ -100,6 +121,7 @@ export default class DrugFactoriesController {
           throw new DataNotFoundException("Data tidak ditemukan!", 404);
         }
       }
+
     }
   }
 }

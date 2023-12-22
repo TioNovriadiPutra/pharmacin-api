@@ -54,9 +54,18 @@ Route.group(() => {
   Route.post("/", "DrugFactoriesController.addDrugFactory").as(
     "factory.add-factory"
   );
+
+  Route.get("/:id", "DrugFactoriesController.showFactoryDetails").as(
+    "factory.details"
+  )
+  Route.put('/:id', "DrugFactoriesController.updateFactoryDetails").as(
+    "factory.update-factory"
+  )
+
   Route.delete("/:id", "DrugFactoriesController.deleteClinicDrugFactory").as(
     "factory.delete"
   );
+
 })
   .prefix("factory")
   .middleware("auth");
@@ -66,13 +75,16 @@ Route.group(() => {
   Route.get("/category", "DrugsController.showClinicDrugCategories").as(
     "drug.show.category"
   );
-  Route.post("/", "DrugsController.addDrug").as("drugs.add-drug");
-  Route.post("/category", "DrugsController.storeDrugCategory").as(
-    "drug.store.category"
-  );
-})
-  .prefix("drug")
-  .middleware("auth");
+  Route.post("/", "DrugsController.addDrug").as(
+    "drugs.add-drug"
+  )
+  Route.put('/:id', "DrugsController.updateDrug").as(
+    "drugs.update-drug"
+  )
+  Route.delete('/:id', "DrugsController.deleteDrug").as(
+    "drugs.delete-drug"
+  )
+}).prefix("drug").middleware("auth")
 
 Route.group(() => {
   Route.get("/", "DrugCategoriesController.showClinicDrugCategories").as(

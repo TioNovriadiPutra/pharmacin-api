@@ -38,6 +38,7 @@ export default class AuthController {
         message: "Registration success!",
       });
     } catch (error) {
+      console.log(error)
       if (error.status === 422) {
         throw new CustomValidationException(false, error.messages);
       }

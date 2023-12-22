@@ -1,10 +1,13 @@
-import { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
-import Drug from "App/Models/Drug";
-import AddDrugValidator from "App/Validators/AddDrugValidator";
-import Database from "@ioc:Adonis/Lucid/Database";
-import DrugCategory from "App/Models/DrugCategory";
-import StoreDrugCategoryValidator from "App/Validators/StoreDrugCategoryValidator";
-import CustomValidationException from "App/Exceptions/CustomValidationException";
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
+import Drug from 'App/Models/Drug';
+import DrugFactory from 'App/Models/DrugFactory';
+import showClinicDrugFactories from 'App/Controllers/Http/DrugFactoriesController'
+import AddDrugValidator from 'App/Validators/AddDrugValidator';
+import DrugCategory from 'App/Models/DrugCategory';
+import Clinic from 'App/Models/Clinic';
+import Database from '@ioc:Adonis/Lucid/Database';
+import StoreDrugCategoryValidator from 'App/Validators/StoreDrugCategoryValidator';
+import CustomValidationException from 'App/Exceptions/CustomValidationException';
 
 export default class DrugFactoryController {
   public async showClinicDrugCategories({
@@ -88,4 +91,48 @@ export default class DrugFactoryController {
       });
     }
   }
+    
+    public async updateDrug({request, response, params, auth}: HttpContextContract) {
+        try {
+            if(auth.user){
+                const data = await request.validate(AddDrugValidator)
+                const id = params.id
+                const drugsData = await Database.rawQuery(
+                    "SELECT * FROM drugs WHERE id = ?",
+                    [id]
+                )
+                drugsData.name = data.name;
+                drugsData.genericName = data.genericName
+                drugsData.dose = data.dose
+                drugsData.shelve = data.shelve
+                drugsData.sellingPrice = data.sellingPrice
+                drugsData.purchasePrice = data.purchasePrice
+                drugsData.drugCategoryId = data.drugCategoryId
+                drugsData.drugFactoryId = data.drugFactoryId
+
+                await drugsData.save()
+                return response.ok({
+                    message: "Data has been updated successfully!"
+                })
+            }
+        } catch(error) {
+            console.log(error)
+            return response.unprocessableEntity(error.messages.errors);
+        }
+    }
+
+    public async deleteDrug({response, params}: HttpContextContract) {
+        try {
+            const id = params.id
+            const data = await Database.rawQuery(
+                'SELECT * FROM drugs WHERE id = ?',
+                [id]
+            )
+            await data.delete()
+            return response.ok({message: "Drugs has been deleted successfully!"})
+        } catch(error) {
+            console.log(error)
+            return response.unprocessableEntity(error.messages.errors);
+        }
+    }
 }
