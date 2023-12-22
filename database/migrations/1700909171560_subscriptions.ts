@@ -11,7 +11,7 @@ export default class extends BaseSchema {
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
       table.integer('user_id').unsigned().references('users.id').onDelete('CASCADE').notNullable()
-      table.integer('subscription_package_id').unsigned().references('subscriptions_packages.id').onDelete('CASCADE').notNullable()
+      table.integer('subscription_package_id').unsigned().references('subscription_packages.id').onDelete('CASCADE').notNullable()
       table.integer('payment_method_id').unsigned().references('payment_methods.id').onDelete('CASCADE').notNullable()
       table.tinyint('status').notNullable()
       table.integer('payment').notNullable() 

@@ -1,8 +1,12 @@
 import { DateTime } from "luxon";
 import {
   BaseModel,
+  BelongsTo,
+  HasMany,
   HasOne,
+  belongsTo,
   column,
+  hasMany,
   hasOne,
 } from "@ioc:Adonis/Lucid/Orm";
 import Drug from "./Drug";
@@ -23,6 +27,9 @@ export default class Stock extends BaseModel {
 
   @column()
   public drugCategoryId: number
+
+  @column()
+  public clinicId: number
   
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
@@ -35,4 +42,10 @@ export default class Stock extends BaseModel {
 
   @hasOne(() => Drug)
   public drugCategory: HasOne<typeof Drug>
+
+  @hasMany(() => StockPerBatch)
+  public stockBatches: HasMany<typeof StockPerBatch>
+
+  @belongsTo(() => Clinic)
+  public clinic: BelongsTo<typeof Clinic>
 }
