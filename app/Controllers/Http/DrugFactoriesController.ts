@@ -48,7 +48,7 @@ export default class DrugFactoriesController {
 
       return response.ok({
         message: "Data fetched!",
-        data: factoryData,
+        data: factoryData[0],
       });
     }
   }
@@ -71,7 +71,7 @@ export default class DrugFactoriesController {
 
       return response.ok({
         message: "Data fetched!",
-        data: factoryDetail,
+        data: factoryDetail[0],
       });
     } catch (error) {
       console.error(error);
