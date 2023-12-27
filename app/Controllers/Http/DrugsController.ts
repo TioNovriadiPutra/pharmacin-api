@@ -87,7 +87,7 @@ export default class DrugFactoryController {
 
       return response.ok({
         message: "Data fetched!",
-        data: drugsData,
+        data: drugsData[0],
       });
     }
   }
