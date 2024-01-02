@@ -48,9 +48,6 @@ Route.group(() => {
   Route.get("/", "DrugFactoriesController.showClinicDrugFactories").as(
     "factory.show"
   );
-  Route.get("/:id", "DrugFactoriesController.showFactoryDetails").as(
-    "factory.details"
-  );
   Route.post("/", "DrugFactoriesController.addDrugFactory").as(
     "factory.add-factory"
   );
@@ -87,12 +84,28 @@ Route.group(() => {
 }).prefix("drug").middleware("auth")
 
 Route.group(() => {
-  Route.get("/", "DrugCategoriesController.showClinicDrugCategories").as(
-    "category.show"
-  );
   Route.post("/", "DrugCategoriesController.addDrugCategory").as(
     "category.add-drug-category"
   );
 })
   .prefix("category")
   .middleware("auth");
+
+// Stock
+Route.group(() => {
+  Route.get("/", "StocksController.showStockByItem").as("stock.index")
+  Route.get("/batch", "StocksController.showStockByBatch").as("stock.batch")
+}).prefix("stock").middleware("auth")
+
+Route.resource("payment-method", "PaymentMethodsController")
+  .apiOnly()
+  .middleware({ "*": ["auth"] });
+
+// Route.resource("subscription", "SubscriptionsController")
+//   .apiOnly()
+//   .middleware({ "*": ["auth"] });
+
+Route.group(() => {
+  Route.get("/", "SubscriptionsController.listSubscription").as("subscription.list")
+  Route.post("/", "SubscriptionsController.subscribe").as("subscription.subscribe")
+}).prefix("subscription").middleware("auth")
