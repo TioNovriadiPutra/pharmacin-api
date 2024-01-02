@@ -1,10 +1,10 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import Drug from 'App/Models/Drug';
-import DrugFactory from 'App/Models/DrugFactory';
-import showClinicDrugFactories from 'App/Controllers/Http/DrugFactoriesController'
+// import DrugFactory from 'App/Models/DrugFactory';
+// import showClinicDrugFactories from 'App/Controllers/Http/DrugFactoriesController'
 import AddDrugValidator from 'App/Validators/AddDrugValidator';
 import DrugCategory from 'App/Models/DrugCategory';
-import Clinic from 'App/Models/Clinic';
+// import Clinic from 'App/Models/Clinic';
 import Database from '@ioc:Adonis/Lucid/Database';
 import StoreDrugCategoryValidator from 'App/Validators/StoreDrugCategoryValidator';
 import CustomValidationException from 'App/Exceptions/CustomValidationException';
@@ -57,6 +57,8 @@ export default class DrugFactoryController {
           "SELECT cl.*, dc.category_name, dc.id AS kamrol, dfp.* FROM clinics cl LEFT JOIN drug_categories dc ON dc.clinic_id = cl.id LEFT JOIN drug_factory_partners dfp ON cl.id = dfp.clinic_id WHERE cl.id = ?",
           [auth.user.clinicId]
         );
+        console.log("ini data clinci",clinicData)
+        console.log("data request", data)
 
         const newDrug = new Drug();
         newDrug.name = data.name;
@@ -69,11 +71,12 @@ export default class DrugFactoryController {
         newDrug.drugFactoryId = data.drugFactoryId;
 
         await newDrug.save();
-
+        console.log(newDrug)
         return response.created({
           message: "Drug added successfully",
-          data: clinicData,
+          data: newDrug[0],
         });
+        
       }
     } catch (error) {
       console.log(error);
@@ -117,7 +120,9 @@ export default class DrugFactoryController {
             }
         } catch(error) {
             console.log(error)
-            return response.unprocessableEntity(error.messages.errors);
+            if (error.status === 422) {
+              throw new CustomValidationException(false, error.messages);
+          }
         }
     }
 
