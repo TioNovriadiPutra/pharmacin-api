@@ -109,3 +109,45 @@ Route.group(() => {
   Route.get("/", "SubscriptionsController.listSubscription").as("subscription.list")
   Route.post("/", "SubscriptionsController.subscribe").as("subscription.subscribe")
 }).prefix("subscription").middleware("auth")
+
+Route.group(() => {
+  Route.get("/", "PurchaseTransactionsController.showClinicPurchaseTransaction").as(
+    "purchase-transaction.show"
+  );
+
+  Route.get("/:id", "PurchaseTransactionsController.showDetailPurchaseTransaction").as(
+    "purchase-transaction.detail"
+  );
+
+  Route.post("/", "PurchaseTransactionsController.addPurchaseTransaction").as(
+    "purchase-transaction.add"
+  );
+
+  Route.delete("/:id", "PurchaseTransactionsController.deletePurchaseTransaction").as(
+    "purchase-transaction.delete"
+  );
+
+})
+  .prefix("purchase-transaction")
+  .middleware("auth");
+
+Route.group(() => {
+  Route.get("/", "SellingTransactionsController.showClinicSellingTransaction").as(
+    "selling-transaction.show"
+  );
+
+  Route.get("/:id", "SellingTransactionsController.showDetailSellingTransaction").as(
+    "selling-transaction.detail"
+  );
+
+  Route.post("/", "SellingTransactionsController.addSellingTransaction").as(
+    "selling-transaction.add"
+  );
+
+  Route.delete("/:id", "SellingTransactionsController.deleteSellingTransaction").as(
+    "selling-transaction.delete"
+  );
+
+})
+  .prefix("selling-transaction")
+  .middleware("auth");

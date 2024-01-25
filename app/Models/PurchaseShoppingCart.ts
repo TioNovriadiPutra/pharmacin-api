@@ -14,6 +14,21 @@ export default class PurchaseShoppingCart extends BaseModel {
   public quantity: number
 
   @column()
+  public drugName: string;
+
+  @column()
+  public drugGenericName: string;
+
+  @column()
+  public drugCategoryName: string;
+
+  @column()
+  public purchasePrice: number
+
+  @column()
+  public subtotalDiscount: number
+
+  @column()
   public drugId: number
   @belongsTo(() => Drug)
   public drug: BelongsTo<typeof Drug>
