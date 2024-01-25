@@ -8,6 +8,15 @@ export default class SellingShoppingCart extends BaseModel {
   public id: number
 
   @column()
+  public itemName: string;
+
+  @column()
+  public itemPrice: number
+
+  @column()
+  public subtotalDiscount: number
+
+  @column()
   public quantity: number
 
   @column()
